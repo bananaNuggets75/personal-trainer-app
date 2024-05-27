@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
+import 'main.dart'; // Import your main file to access MainScreen
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -31,10 +31,7 @@ class LoginPage extends StatelessWidget {
                 String username = _usernameController.text;
                 String password = _passwordController.text;
                 if (username.isNotEmpty && password.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+                  Navigator.pushReplacementNamed(context, '/home');
                 }
               },
               child: Text('Login'),
