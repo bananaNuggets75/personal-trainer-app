@@ -41,11 +41,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
             Text('Select Workout:'),
             DropdownButton<String>(
               value: selectedWorkout,
-              items: <String>[
-                'Push up',
-                'Squat',
-                'Pull up'
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: <String>['Push up', 'Squat', 'Pull up']
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -90,6 +87,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
             ),
             SizedBox(height: 20),
             Text('Calculated Calorie Burn: ${calorieBurn ?? "N/A"}'),
+            ElevatedButton(
+              onPressed: () {
+                // Handle the submit action
+              },
+              child: Text('Submit'),
+              style: ElevatedButton.styleFrom(
+                elevation: 2, // Adjust the elevation as needed
+              ),
+            )
           ],
         ),
       ),
