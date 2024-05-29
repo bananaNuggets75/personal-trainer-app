@@ -6,7 +6,8 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  String selectedWorkout = 'Push up';
+  String selectedWorkout = 'Push Up';
+  String selectedWorkoutType = 'Cardio';
   double? expectedTime;
   double? calorieBurn;
 
@@ -38,11 +39,31 @@ class _WorkoutPageState extends State<WorkoutPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Select Workout:'),
+            Text('Select Workout Type:'),
+            DropdownButton<String>(
+              value: selectedWorkoutType,
+              items: <String>['Cardio', 'Chest', 'Leg']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    selectedWorkoutType = newValue;
+                  });
+                }
+              },
+            ),
+            SizedBox(height: 20),
+            Text('Select Workouts:'),
             DropdownButton<String>(
               value: selectedWorkout,
-              items: <String>['Push up', 'Squat', 'Pull up']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'Push Up', 'Pull Up', 'Squat', 'Leg Press', 'Barbell Curl', 'Bench Press'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
