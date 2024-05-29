@@ -12,6 +12,13 @@ class _ProfilePageState extends State<ProfilePage> {
     'Squat - 50 reps',
     'Running - 5 km',
   ];
+
+  List<String> goals = [
+    'Run 10 km in a week',
+    'Do 100 push-ups in one session',
+    'Squat 200 times in a month',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +79,20 @@ class _ProfilePageState extends State<ProfilePage> {
             ...activities.map((activity) => ListTile(
               leading: Icon(Icons.fitness_center),
               title: Text(activity),
+            )),
+            SizedBox(height: 20),
+            // User goals section
+            Text(
+              'Goals',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Divider(),
+            ...goals.map((goal) => ListTile(
+              leading: Icon(Icons.flag),
+              title: Text(goal),
             )),
           ],
         ),
