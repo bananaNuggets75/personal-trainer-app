@@ -6,6 +6,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  List<String> activities = [
+    'Push Up - 30 reps',
+    'Squat - 50 reps',
+    'Running - 5 km',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +59,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
+            SizedBox(height: 30),
+            // User activities section
+            Text(
+              'Activities',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Divider(),
+            ...activities.map((activity) => ListTile(
+              leading: Icon(Icons.fitness_center),
+              title: Text(activity),
+            )),
           ],
         ),
       ),
