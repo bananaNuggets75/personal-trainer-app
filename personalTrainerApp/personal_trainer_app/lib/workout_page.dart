@@ -11,23 +11,32 @@ class _WorkoutPageState extends State<WorkoutPage> {
   double? calorieBurn;
 
   // Hypothetical calorie burn rates per minute for each workout
-  Map<String, double> calorieBurnRates = {
-    'Push Up': 8.0,
-    'Squat': 6.0,
-    'Pull Up': 10.0,
-    'Leg Press': 7.0,
-    'Barbell Curl': 5.0,
-    'Bench Press': 9.0,
+  Map<String, Map<String, double>> workoutCategories = {
+    'Cardio': {
+      'Running': 10.0,
+      'Cycling': 8.0,
+      'Jump Rope': 12.0,
+    },
+    'Chest': {
+      'Push Up': 8.0,
+      'Bench Press': 9.0,
+      'Chest Fly': 7.0,
+    },
+    'Leg': {
+      'Squat': 6.0,
+      'Leg Press': 7.0,
+      'Lunges': 5.0,
+    },
   };
 
-  Map<String, bool> selectedWorkouts = {
-    'Push Up': false,
-    'Squat': false,
-    'Pull Up': false,
-    'Leg Press': false,
-    'Barbell Curl': false,
-    'Bench Press': false,
-  };
+  Map<String, bool> selectedWorkouts = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize selectedWorkouts with the default workout type
+    updateSelectedWorkouts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +62,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             Text('Select Workout Type:'),
             DropdownButton<String>(
               value: selectedWorkoutType,
-              items: <String>['Cardio', 'Chest', 'Leg']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: workoutCategories.keys.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -64,6 +72,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 if (newValue != null) {
                   setState(() {
                     selectedWorkoutType = newValue;
+                    updateSelectedWorkouts();
+                    calculateCalorieBurn();
                   });
                 }
               },
@@ -120,12 +130,20 @@ class _WorkoutPageState extends State<WorkoutPage> {
     );
   }
 
+  void updateSelectedWorkouts() {
+    selectedWorkouts = Map.fromIterable(
+      workoutCategories[selectedWorkoutType]!.keys,
+      key: (k) => k,
+      value: (v) => false,
+    );
+  }
+
   void calculateCalorieBurn() {
     if (expectedTime != null) {
       double totalCalories = 0.0;
       selectedWorkouts.forEach((workout, isSelected) {
         if (isSelected) {
-          totalCalories += (calorieBurnRates[workout] ?? 0) * expectedTime!;
+          totalCalories += (workoutCategories[selectedWorkoutType]![workout] ?? 0) * expectedTime!;
         }
       });
       setState(() {
