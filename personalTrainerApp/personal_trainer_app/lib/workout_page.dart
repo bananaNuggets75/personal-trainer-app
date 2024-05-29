@@ -6,7 +6,6 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  String selectedWorkout = 'Push Up';
   String selectedWorkoutType = 'Cardio';
   double? expectedTime;
   double? calorieBurn;
@@ -19,6 +18,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
     'Leg Press': 7.0,
     'Barbell Curl': 5.0,
     'Bench Press': 9.0,
+  };
+
+  Map<String, bool> selectedWorkouts = {
+    'Push Up': false,
+    'Squat': false,
+    'Pull Up': false,
+    'Leg Press': false,
+    'Barbell Curl': false,
+    'Bench Press': false,
   };
 
   @override
@@ -61,25 +69,22 @@ class _WorkoutPageState extends State<WorkoutPage> {
               },
             ),
             SizedBox(height: 20),
-            Text('Select Workout:'),
-            DropdownButton<String>(
-              value: selectedWorkout,
-              items: <String>[
-                'Push Up', 'Pull Up', 'Squat', 'Leg Press', 'Barbell Curl', 'Bench Press'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    selectedWorkout = newValue;
-                    calculateCalorieBurn();
-                  });
-                }
-              },
+            Text('Select Workouts:'),
+            Expanded(
+              child: ListView(
+                children: selectedWorkouts.keys.map((String key) {
+                  return CheckboxListTile(
+                    title: Text(key),
+                    value: selectedWorkouts[key],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        selectedWorkouts[key] = value ?? false;
+                        calculateCalorieBurn();
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
             ),
             SizedBox(height: 20),
             Text('Expected Time (minutes):'),
@@ -116,9 +121,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   void calculateCalorieBurn() {
-    if (expectedTime != null && calorieBurnRates.containsKey(selectedWorkout)) {
+    if (expectedTime != null) {
+      double totalCalories = 0.0;
+      selectedWorkouts.forEach((workout, isSelected) {
+        if (isSelected) {
+          totalCalories += (calorieBurnRates[workout] ?? 0) * expectedTime!;
+        }
+      });
       setState(() {
-        calorieBurn = expectedTime! * calorieBurnRates[selectedWorkout]!;
+        calorieBurn = totalCalories;
       });
     }
   }
