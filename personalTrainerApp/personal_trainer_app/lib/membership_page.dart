@@ -6,7 +6,7 @@ class MembershipPage extends StatefulWidget {
 }
 
 class _MembershipPageState extends State<MembershipPage> {
-  String selectedMembership = 'Membership level';
+  String selectedMembership = 'Premium Membership';
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +29,14 @@ class _MembershipPageState extends State<MembershipPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Select Field:'),
+              Text('Select Membership:'),
               DropdownButton<String>(
                 value: selectedMembership,
-                items: <String>['Premium', 'Gold', 'Regular']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: <String>[
+                  'Premium Membership',
+                  'Gold Membership',
+                  'Regular Membership'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -46,6 +49,13 @@ class _MembershipPageState extends State<MembershipPage> {
                     });
                   }
                 },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle the submit action
+                },
+                child: Text('Submit'),
               ),
             ],
           ),
