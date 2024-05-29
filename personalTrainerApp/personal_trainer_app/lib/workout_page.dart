@@ -13,9 +13,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   // Hypothetical calorie burn rates per minute for each workout
   Map<String, double> calorieBurnRates = {
-    'Push up': 8.0,
+    'Push Up': 8.0,
     'Squat': 6.0,
-    'Pull up': 10.0,
+    'Pull Up': 10.0,
+    'Leg Press': 7.0,
+    'Barbell Curl': 5.0,
+    'Bench Press': 9.0,
   };
 
   @override
@@ -58,7 +61,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
               },
             ),
             SizedBox(height: 20),
-            Text('Select Workouts:'),
+            Text('Select Workout:'),
             DropdownButton<String>(
               value: selectedWorkout,
               items: <String>[
@@ -73,16 +76,17 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 if (newValue != null) {
                   setState(() {
                     selectedWorkout = newValue;
+                    calculateCalorieBurn();
                   });
                 }
               },
             ),
             SizedBox(height: 20),
-            Text('Expected Time:'),
+            Text('Expected Time (minutes):'),
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: 'Enter Expected Time finished',
+                hintText: 'Enter Expected Time',
               ),
               onChanged: (value) {
                 setState(() {
@@ -95,19 +99,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
               },
             ),
             SizedBox(height: 20),
-            Text('Input Calorie burn:'),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Enter expected calorie burn',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  calorieBurn = double.tryParse(value);
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            Text('Calculated Calorie Burn: ${calorieBurn ?? "N/A"}'),
+            Text('Calculated Calorie Burn: ${calorieBurn?.toStringAsFixed(2) ?? "N/A"}'),
             ElevatedButton(
               onPressed: () {
                 // Handle the submit action
