@@ -21,10 +21,7 @@ class LoginPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.3),
-                    Colors.black.withOpacity(0.7)
-                  ],
+                  colors: [Colors.black.withOpacity(0.3), Colors.black.withOpacity(0.7)],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -33,52 +30,115 @@ class LoginPage extends StatelessWidget {
           ),
           // Login form
           Center(
-              child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    'Yu\nPersonal Trainer',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'Yu\nPersonal Trainer',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20.0),
-                  TextField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
+                    SizedBox(height: 20.0),
+                    TextField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                      suffixIcon: Icon(Icons.visibility),
+                    SizedBox(height: 10.0),
+                    TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.white,
+                        suffixIcon: Icon(Icons.visibility),
+                      ),
+                      obscureText: true,
                     ),
-                    obscureText: true,
-                  ),
-                ],
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(value: true, onChanged: (bool? value) {}),
+                            Text('Keep me logged in'),
+                          ],
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // Handle forgot password
+                          },
+                          child: Text('Forgot password?'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        String username = _usernameController.text;
+                        String password = _passwordController.text;
+                        if (username.isNotEmpty && password.isNotEmpty) {
+                          Navigator.pushReplacementNamed(context, '/home');
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                        backgroundColor: Colors.black,
+                      ),
+                      child: Text(
+                        'Log in',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    TextButton(
+                      onPressed: () {
+                        // Handle register
+                      },
+                      child: Text("Don't have an account? Register"),
+                    ),
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            // Handle terms of use
+                          },
+                          child: Text('Terms of Use'),
+                        ),
+                        Text(' | '),
+                        TextButton(
+                          onPressed: () {
+                            // Handle privacy policy
+                          },
+                          child: Text('Privacy Policy'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          )),
+          ),
         ],
       ),
     );
