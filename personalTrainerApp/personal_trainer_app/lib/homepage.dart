@@ -23,21 +23,21 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           WorkoutItem(
             text: 'Membership',
-            imageUrl: 'https://static.vecteezy.com/system/resources/previews/009/245/053/non_2x/membership-outline-icon-free-vector.jpg', // Replace with your image URL
+            imageUrl: 'https://static.vecteezy.com/system/resources/previews/009/245/053/non_2x/membership-outline-icon-free-vector.jpg',
             onTap: () {
               Navigator.pushNamed(context, '/membership');
             },
           ),
           WorkoutItem(
             text: 'Workout',
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3860/3860254.png', // Replace with your image URL
+            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3860/3860254.png',
             onTap: () {
               Navigator.pushNamed(context, '/workout');
             },
           ),
           WorkoutItem(
             text: 'Profile',
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', // Replace with your image URL
+            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
             onTap: () {
               Navigator.pushNamed(context, '/profile');
             },
@@ -47,6 +47,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 
 class WorkoutItem extends StatelessWidget {
   final String text;
@@ -74,32 +75,22 @@ class WorkoutItem extends StatelessWidget {
               ),
             ),
             Container(
-              height: 100.0,
+              height: 180.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 color: Colors.black.withOpacity(0.6),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.0,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Icon(
-                      Icons.arrow_forward,
+              child: Center(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    text,
+                    style: TextStyle(
                       color: Colors.white,
+                      fontSize: 36.0,
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],
@@ -108,6 +99,8 @@ class WorkoutItem extends StatelessWidget {
     );
   }
 }
+
+
 
 class NavigationDrawer extends StatelessWidget {
   @override
