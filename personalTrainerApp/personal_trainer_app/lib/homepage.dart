@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Workout'),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -18,8 +18,72 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: NavigationDrawer(),
-      body: Center(
-        child: Text('Welcome to the Personal Trainer App!'),
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: <Widget>[
+          WorkoutItem(
+            text: 'Membership',
+            color: Colors.purple,
+            onTap: () {
+              Navigator.pushNamed(context, '/membership');
+            },
+          ),
+          WorkoutItem(
+            text: 'Workout',
+            color: Colors.cyan,
+            onTap: () {
+              Navigator.pushNamed(context, '/workout');
+            },
+          ),
+          WorkoutItem(
+            text: 'Profile',
+            color: Colors.purple,
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WorkoutItem extends StatelessWidget {
+  final String text;
+  final Color color;
+  final VoidCallback onTap;
+
+  WorkoutItem({required this.text, required this.color, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24.0,
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
