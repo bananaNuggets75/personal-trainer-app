@@ -23,21 +23,21 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           WorkoutItem(
             text: 'Membership',
-            color: Colors.purple,
+            imageUrl: 'https://static.vecteezy.com/system/resources/previews/009/245/053/non_2x/membership-outline-icon-free-vector.jpg', // Replace with your image URL
             onTap: () {
               Navigator.pushNamed(context, '/membership');
             },
           ),
           WorkoutItem(
             text: 'Workout',
-            color: Colors.cyan,
+            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3860/3860254.png', // Replace with your image URL
             onTap: () {
               Navigator.pushNamed(context, '/workout');
             },
           ),
           WorkoutItem(
             text: 'Profile',
-            color: Colors.purple,
+            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', // Replace with your image URL
             onTap: () {
               Navigator.pushNamed(context, '/profile');
             },
@@ -50,10 +50,10 @@ class HomePage extends StatelessWidget {
 
 class WorkoutItem extends StatelessWidget {
   final String text;
-  final Color color;
+  final String imageUrl;
   final VoidCallback onTap;
 
-  WorkoutItem({required this.text, required this.color, required this.onTap});
+  WorkoutItem({required this.text, required this.imageUrl, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -61,28 +61,48 @@ class WorkoutItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24.0,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: 100.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
+            ),
+            Container(
+              height: 100.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                color: Colors.black.withOpacity(0.6),
               ),
-            ],
-          ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
