@@ -55,11 +55,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Select Workout Type:'),
+            Text(
+              'Select Workout Type:',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10.0),
             DropdownButton<String>(
               value: selectedWorkoutType,
               items: workoutCategories.keys.map<DropdownMenuItem<String>>((String value) {
@@ -79,28 +83,53 @@ class _WorkoutPageState extends State<WorkoutPage> {
               },
             ),
             SizedBox(height: 20),
-            Text('Select Workouts:'),
+            Text(
+              'Select Workouts:',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
             Expanded(
-              child: ListView(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 3, // Adjust this to control the height of the tiles
                 children: selectedWorkouts.keys.map((String key) {
-                  return CheckboxListTile(
-                    title: Text(key),
-                    value: selectedWorkouts[key],
-                    onChanged: (bool? value) {
+                  return GestureDetector(
+                    onTap: () {
                       setState(() {
-                        selectedWorkouts[key] = value ?? false;
+                        selectedWorkouts[key] = !selectedWorkouts[key]!;
                         calculateCalorieBurn();
                       });
                     },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: selectedWorkouts[key]! ? Colors.blue[100] : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: selectedWorkouts[key]! ? Border.all(color: Colors.blue, width: 2) : null,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.fitness_center, size: 30), // Smaller icon size
+                          SizedBox(height: 5),
+                          Text(key, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.0)), // Smaller font size
+                        ],
+                      ),
+                    ),
                   );
                 }).toList(),
               ),
             ),
             SizedBox(height: 20),
-            Text('Expected Time (minutes):'),
+            Text(
+              'Expected Time (minutes):',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10.0),
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
+                border: OutlineInputBorder(),
                 hintText: 'Enter Expected Time',
               ),
               onChanged: (value) {
@@ -114,16 +143,24 @@ class _WorkoutPageState extends State<WorkoutPage> {
               },
             ),
             SizedBox(height: 20),
-            Text('Calculated Calorie Burn: ${calorieBurn?.toStringAsFixed(2) ?? "N/A"}'),
-            ElevatedButton(
-              onPressed: () {
-                // Handle the submit action
-              },
-              child: Text('Submit'),
-              style: ElevatedButton.styleFrom(
-                elevation: 2, // Adjust the elevation as needed
+            Text(
+              'Calculated Calorie Burn: ${calorieBurn?.toStringAsFixed(2) ?? "N/A"}',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  // Handle the submit action
+                },
+                child: Text('Submit'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                  textStyle: TextStyle(fontSize: 18.0),
+                  elevation: 2, // Adjust the elevation as needed
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -150,5 +187,51 @@ class _WorkoutPageState extends State<WorkoutPage> {
         calorieBurn = totalCalories;
       });
     }
+  }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              'Navigation Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Text('Membership'),
+            onTap: () {
+              Navigator.pushNamed(context, '/membership');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.show_chart),
+            title: Text('Workout'),
+            onTap: () {
+              Navigator.pushNamed(context, '/workout');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.monitor),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
