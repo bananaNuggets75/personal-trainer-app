@@ -7,58 +7,120 @@ class MembershipPage extends StatefulWidget {
 
 class _MembershipPageState extends State<MembershipPage> {
   String selectedMembership = 'Premium Membership';
+  final Map<String, String> membershipDescriptions = {
+    'Premium Membership': 'Enjoy premium features and priority support.',
+    'Gold Membership': 'Get access to exclusive content and gold support.',
+    'Regular Membership': 'Basic access with standard features.',
+  };
+  final Map<String, double> membershipPrices = {
+    'Premium Membership': 29.99,
+    'Gold Membership': 19.99,
+    'Regular Membership': 9.99,
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Memberships'),
-          leading: Builder(
-            builder: (context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
-            },
-          ),
+      appBar: AppBar(
+        title: Text('Memberships'),
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Select Membership:'),
-              DropdownButton<String>(
-                value: selectedMembership,
-                items: <String>[
-                  'Premium Membership',
-                  'Gold Membership',
-                  'Regular Membership'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      selectedMembership = newValue;
-                    });
-                  }
-                },
+              Text(
+                'Choose Your Plan',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Handle the submit action
-                },
-                child: Text('Submit'),
+              ...membershipDescriptions.keys.map((membership) {
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        selectedMembership = membership;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: selectedMembership == membership
+                            ? Colors.purple[100]
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: selectedMembership == membership
+                            ? Border.all(color: Colors.purple, width: 2)
+                            : null,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                membership,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '\$${membershipPrices[membership]}',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            membershipDescriptions[membership]!,
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+              SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                  },
+                  child: Text('Subscribe Now'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                    padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                    textStyle: TextStyle(fontSize: 18.0),
+                    elevation: 2,
+                  ),
+                ),
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
+
