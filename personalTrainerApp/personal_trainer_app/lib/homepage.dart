@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Workout'),
+        title: Text('Personal Trainer'),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -21,86 +21,133 @@ class HomePage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: <Widget>[
-          WorkoutItem(
-            text: 'Membership',
-            imageUrl: 'https://static.vecteezy.com/system/resources/previews/009/245/053/non_2x/membership-outline-icon-free-vector.jpg',
-            onTap: () {
-              Navigator.pushNamed(context, '/membership');
-            },
+          Text(
+            'Are you ready to transform your body?',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-          WorkoutItem(
-            text: 'Workout',
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3860/3860254.png',
-            onTap: () {
-              Navigator.pushNamed(context, '/workout');
-            },
-          ),
-          WorkoutItem(
-            text: 'Profile',
-            imageUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-            onTap: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-          ),
+          SizedBox(height: 30),
+          WorkoutSection(),
+          SizedBox(height: 30),
+          SectionGrid(),
         ],
       ),
     );
   }
 }
 
-
-class WorkoutItem extends StatelessWidget {
-  final String text;
-  final String imageUrl;
-  final VoidCallback onTap;
-
-  WorkoutItem({required this.text, required this.imageUrl, required this.onTap});
-
+class WorkoutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: InkWell(
-        onTap: onTap,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: 100.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
+    return Container(
+      height: 250.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        image: DecorationImage(
+          image: NetworkImage('https://cdn-icons-png.flaticon.com/512/3860/3860254.png'), // Replace with your workout image URL
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Colors.black.withOpacity(0.5),
+        ),
+        child: Center(
+          child: Text(
+            'Workout',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
             ),
-            Container(
-              height: 180.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                color: Colors.black.withOpacity(0.6),
-              ),
-              child: Center(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 36.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
   }
 }
 
+class SectionGrid extends StatelessWidget {
+  final List<Map<String, String>> sections = [
+    {
+      'title': 'Membership',
+      'imageUrl': 'https://static.vecteezy.com/system/resources/previews/009/245/053/non_2x/membership-outline-icon-free-vector.jpg',
+      'route': '/membership',
+    },
+    {
+      'title': 'Profile',
+      'imageUrl': 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+      'route': '/profile',
+    },
+  ];
 
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: sections.map((section) {
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SectionItem(
+              title: section['title']!,
+              imageUrl: section['imageUrl']!,
+              route: section['route']!,
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class SectionItem extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+  final String route;
+
+  SectionItem({required this.title, required this.imageUrl, required this.route});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, route);
+      },
+      child: Container(
+        height: 250.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          image: DecorationImage(
+            image: NetworkImage(imageUrl),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            color: Colors.black.withOpacity(0.5),
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -129,14 +176,14 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.show_chart),
+            leading: Icon(Icons.fitness_center),
             title: Text('Workout'),
             onTap: () {
               Navigator.pushNamed(context, '/workout');
             },
           ),
           ListTile(
-            leading: Icon(Icons.monitor),
+            leading: Icon(Icons.person),
             title: Text('Profile'),
             onTap: () {
               Navigator.pushNamed(context, '/profile');
