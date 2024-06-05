@@ -1,6 +1,6 @@
 # Personal Trainer App
 
-This repository contains the initial commit for a personal trainer mobile application being developed using Flutter and Dart. The current implementation includes a simple login page. This project is part of a case study for our final project in one of our college subjects. The original project was developed using SQL and Windows Forms with Visual Studio, but this version is being developed as a mobile app using Android Studio.
+This repository contains a functional planner for your workout as part of a personal trainer mobile application being developed using Flutter and Dart. The current implementation includes a login page, a home page with navigation to different sections, and pages for Membership, Workout, and Profile. This project is part of a case study for our final project in one of our college subjects. The original project was developed using SQL and Windows Forms with Visual Studio, but this version is being developed as a mobile app using Android Studio.
 
 ## Table of Contents
 
@@ -10,12 +10,21 @@ This repository contains the initial commit for a personal trainer mobile applic
 - [Usage](#usage)
 - [Contributing](#contributing)
 
-
 ## Current Features
 
 - Simple and clean login page
   - Text fields for username and password
   - Login button with a print statement for demonstration purposes
+- Home page with navigation drawer
+  - Workout section with a prominent display
+  - Membership and Profile sections aligned at the bottom
+- Membership page
+  - Dropdown to select membership type
+  - Submit button
+- Workout page
+  - (Placeholder for actual workout content)
+- Profile page
+  - (Placeholder for actual profile content)
 
 ## Installation
 
@@ -38,8 +47,8 @@ To run this project locally, follow these steps:
 ## Usage
 
 1. Open the app on your emulator or physical device.
-2. Enter a username and password.
-3. Press the "Login" button to see the entered values printed to the console.
+2. Navigate through the app using the drawer menu.
+3. Explore the Workout, Membership, and Profile sections.
 
 ## Contributing
 
