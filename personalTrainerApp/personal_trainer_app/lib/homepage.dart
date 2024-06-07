@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,12 @@ class HomePage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 30),
-          WorkoutSection(),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/workout');
+            },
+            child: WorkoutSection(),
+          ),
           SizedBox(height: 30),
           SectionGrid(),
         ],
@@ -190,6 +196,48 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MembershipPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Memberships'),
+      ),
+      body: Center(
+        child: Text('Membership Page Content'),
+      ),
+    );
+  }
+}
+
+class WorkoutPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Workout'),
+      ),
+      body: Center(
+        child: Text('Workout Page Content'),
+      ),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+      ),
+      body: Center(
+        child: Text('Profile Page Content'),
       ),
     );
   }
