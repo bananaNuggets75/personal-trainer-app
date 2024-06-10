@@ -48,12 +48,13 @@ class _WorkoutPageState extends State<WorkoutPage> {
             return IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context);
               },
             );
           },
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

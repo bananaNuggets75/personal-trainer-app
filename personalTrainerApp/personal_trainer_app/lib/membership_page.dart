@@ -28,7 +28,7 @@ class _MembershipPageState extends State<MembershipPage> {
             return IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context);
               },
             );
           },

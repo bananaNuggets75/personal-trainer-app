@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
             return IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context);
               },
             );
           },
