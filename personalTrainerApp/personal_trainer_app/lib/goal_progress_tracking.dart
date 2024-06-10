@@ -33,6 +33,7 @@ class _GoalProgressTrackerState extends State<GoalProgressTracker> with SingleTi
           ],
         ),
       ),
+      drawer: NavigationDrawer(),
       body: TabBarView(
         controller: _tabController,
         children: [
@@ -173,3 +174,5 @@ class SessionSchedulingTab extends StatelessWidget {
     );
   }
 }
+
+

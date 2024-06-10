@@ -5,8 +5,8 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
 
+class _ProfilePageState extends State<ProfilePage> {
   List<String> activities = [
     'Push Up - 30 reps',
     'Squat - 50 reps',
@@ -24,17 +24,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
-        leading: Builder(
-          builder: (context) {
-            return IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            );
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
           },
         ),
       ),
+      drawer: NavigationDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -96,6 +93,53 @@ class _ProfilePageState extends State<ProfilePage> {
             )),
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+class NavigationDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              'Navigation Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Text('Membership'),
+            onTap: () {
+              Navigator.pushNamed(context, '/membership');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.show_chart),
+            title: Text('Workout'),
+            onTap: () {
+              Navigator.pushNamed(context, '/workout');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.monitor),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
+        ],
       ),
     );
   }

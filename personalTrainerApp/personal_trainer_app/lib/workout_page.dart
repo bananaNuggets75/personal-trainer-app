@@ -54,7 +54,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
           },
         ),
       ),
-
+      drawer: NavigationDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
