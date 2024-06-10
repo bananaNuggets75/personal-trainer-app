@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -195,6 +194,13 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/profile');
             },
           ),
+          ListTile(
+            leading: Icon(Icons.track_changes),
+            title: Text('Goal & Progress'),
+            onTap: () {
+              Navigator.pushNamed(context, '/goal_progress');
+            },
+          ),
         ],
       ),
     );
@@ -238,6 +244,20 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Center(
         child: Text('Profile Page Content'),
+      ),
+    );
+  }
+}
+
+class GoalProgress extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Goal and Progress'),
+      ),
+      body: Center(
+        child: Text('Goal and Progress Page'),
       ),
     );
   }
