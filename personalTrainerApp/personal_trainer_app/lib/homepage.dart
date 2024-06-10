@@ -89,6 +89,11 @@ class SectionGrid extends StatelessWidget {
       'imageUrl': 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
       'route': '/profile',
     },
+    {
+      'title': 'Goal and Progress',
+      'imageUrl': 'https://cdn.iconscout.com/icon/premium/png-256-thumb/goal-8738695-7088930.png',
+      'route': '/goalProgress',
+    },
   ];
 
   @override
@@ -198,7 +203,7 @@ class NavigationDrawer extends StatelessWidget {
             leading: Icon(Icons.track_changes),
             title: Text('Goal & Progress'),
             onTap: () {
-              Navigator.pushNamed(context, '/goal_progress');
+              Navigator.pushNamed(context, '/goalProgress');
             },
           ),
         ],
