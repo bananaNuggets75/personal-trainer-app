@@ -165,6 +165,13 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/profile');
             },
           ),
+          ListTile(
+            leading: Icon(Icons.track_changes),
+            title: Text('Goal and Progress'),
+            onTap: () {
+              Navigator.pushNamed(context, '/goalProgress');
+            },
+          ),
         ],
       ),
     );

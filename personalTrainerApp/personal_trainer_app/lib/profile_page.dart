@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            Scaffold.of(context).openDrawer();
+            Navigator.pop(context);
           },
         ),
       ),
@@ -139,8 +139,16 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/profile');
             },
           ),
+          ListTile(
+            leading: Icon(Icons.track_changes),
+            title: Text('Goal and Progress'),
+            onTap: () {
+              Navigator.pushNamed(context, '/goalProgress');
+            },
+          ),
         ],
       ),
     );
   }
 }
+
