@@ -180,20 +180,27 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.calendar_today),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.pushNamed(context, '/home');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.calendar_today),
             title: Text('Membership'),
             onTap: () {
               Navigator.pushNamed(context, '/membership');
             },
           ),
           ListTile(
-            leading: Icon(Icons.fitness_center),
+            leading: Icon(Icons.show_chart),
             title: Text('Workout'),
             onTap: () {
               Navigator.pushNamed(context, '/workout');
             },
           ),
           ListTile(
-            leading: Icon(Icons.person),
+            leading: Icon(Icons.monitor),
             title: Text('Profile'),
             onTap: () {
               Navigator.pushNamed(context, '/profile');
@@ -201,7 +208,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.track_changes),
-            title: Text('Goal & Progress'),
+            title: Text('Goal and Progress'),
             onTap: () {
               Navigator.pushNamed(context, '/goalProgress');
             },
@@ -211,6 +218,9 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class MembershipPage extends StatelessWidget {
   @override

@@ -145,6 +145,13 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.pushNamed(context, '/home');
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.calendar_today),
             title: Text('Membership'),
             onTap: () {
