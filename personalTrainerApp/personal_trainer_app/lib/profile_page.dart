@@ -5,7 +5,6 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-
 class _ProfilePageState extends State<ProfilePage> {
   List<String> activities = [
     'Push Up - 30 reps',
@@ -24,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
+        backgroundColor: Colors.teal,
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
@@ -40,21 +40,20 @@ class _ProfilePageState extends State<ProfilePage> {
             Center(
               child: Column(
                 children: [
-                  // User profile image
                   CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage('assets/profile_image.png'),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Joni Jupiter', // User name
+                    'Joni Jupiter',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Fitness Enthusiast', // User tagline
+                    'Fitness Enthusiast',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey[600],
@@ -64,7 +63,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             SizedBox(height: 30),
-            // User activities section
             Text(
               'Activities',
               style: TextStyle(
@@ -78,7 +76,6 @@ class _ProfilePageState extends State<ProfilePage> {
               title: Text(activity),
             )),
             SizedBox(height: 20),
-            // User goals section
             Text(
               'Goals',
               style: TextStyle(
@@ -98,7 +95,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-
 class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -108,7 +104,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.primary,
             ),
             child: Text(
               'Navigation Menu',
@@ -158,4 +154,3 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
-

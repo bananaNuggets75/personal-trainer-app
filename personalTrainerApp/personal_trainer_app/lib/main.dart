@@ -16,7 +16,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Trainer',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.orangeAccent,
+        secondaryHeaderColor: Colors.black,
+        scaffoldBackgroundColor: Colors.grey[100],
+        textTheme: TextTheme(
+          displayLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.black),
+          bodyLarge: TextStyle(fontSize: 16.0, color: Colors.black),
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.orangeAccent,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          textTheme: ButtonTextTheme.primary,
+        ),
       ),
       home: LoginPage(),
       routes: {

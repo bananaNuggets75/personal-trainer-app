@@ -10,7 +10,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   double? expectedTime;
   double? calorieBurn;
 
-  // Hypothetical calorie burn rates per minute for each workout
   Map<String, Map<String, double>> workoutCategories = {
     'Cardio': {
       'Running': 10.0,
@@ -34,7 +33,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   @override
   void initState() {
     super.initState();
-    // Initialize selectedWorkouts with the default workout type
     updateSelectedWorkouts();
   }
 
@@ -43,6 +41,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Workout'),
+        backgroundColor: Colors.teal,
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -93,7 +92,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 3, // Adjust this to control the height of the tiles
+                childAspectRatio: 3,
                 children: selectedWorkouts.keys.map((String key) {
                   return GestureDetector(
                     onTap: () {
@@ -104,16 +103,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: selectedWorkouts[key]! ? Colors.blue[100] : Colors.grey[200],
+                        color: selectedWorkouts[key]! ? Colors.teal[100] : Colors.grey[200],
                         borderRadius: BorderRadius.circular(10.0),
-                        border: selectedWorkouts[key]! ? Border.all(color: Colors.blue, width: 2) : null,
+                        border: selectedWorkouts[key]! ? Border.all(color: Colors.teal, width: 2) : null,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.fitness_center, size: 30), // Smaller icon size
+                          Icon(Icons.fitness_center, size: 30),
                           SizedBox(height: 5),
-                          Text(key, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.0)), // Smaller font size
+                          Text(key, textAlign: TextAlign.center, style: TextStyle(fontSize: 12.0)),
                         ],
                       ),
                     ),
@@ -136,7 +135,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
               onChanged: (value) {
                 setState(() {
                   expectedTime = double.tryParse(value);
-                  // Recalculate calorie burn when expected time changes
                   if (expectedTime != null) {
                     calculateCalorieBurn();
                   }
@@ -156,9 +154,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 },
                 child: Text('Submit'),
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
                   padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                  textStyle: TextStyle(fontSize: 18.0),
-                  elevation: 2, // Adjust the elevation as needed
+                  textStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+                  elevation: 2,
                 ),
               ),
             ),
@@ -200,7 +199,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.primary,
             ),
             child: Text(
               'Navigation Menu',
@@ -250,4 +249,3 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
-

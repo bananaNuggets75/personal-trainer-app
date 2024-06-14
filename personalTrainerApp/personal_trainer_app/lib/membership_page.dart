@@ -23,6 +23,7 @@ class _MembershipPageState extends State<MembershipPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Memberships'),
+        backgroundColor: Colors.teal, // Change AppBar color
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -62,11 +63,11 @@ class _MembershipPageState extends State<MembershipPage> {
                       padding: EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: selectedMembership == membership
-                            ? Colors.purple[100]
-                            : Colors.white,
+                            ? Colors.teal[100] // Color for selected card
+                            : Colors.white, // Color for non-selected card
                         borderRadius: BorderRadius.circular(15.0),
                         border: selectedMembership == membership
-                            ? Border.all(color: Colors.purple, width: 2)
+                            ? Border.all(color: Colors.teal, width: 2)
                             : null,
                       ),
                       child: Column(
@@ -87,7 +88,7 @@ class _MembershipPageState extends State<MembershipPage> {
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.purple,
+                                  color: Colors.teal, // Color for membership price text
                                 ),
                               ),
                             ],
@@ -107,12 +108,13 @@ class _MembershipPageState extends State<MembershipPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
+                    // Handle the subscribe action
                   },
                   child: Text('Subscribe Now'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
+                    backgroundColor: Colors.teal, // Button background color
                     padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-                    textStyle: TextStyle(fontSize: 18.0),
+                    textStyle: TextStyle(fontSize: 18.0, color: Colors.white), // Button text color
                     elevation: 2,
                   ),
                 ),
@@ -134,7 +136,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.primary,
             ),
             child: Text(
               'Navigation Menu',
@@ -184,4 +186,3 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
-

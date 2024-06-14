@@ -24,9 +24,10 @@ class _GoalProgressTrackerState extends State<GoalProgressTracker> with SingleTi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Goal and Progress Tracking'),
+        title: Text('Goal and Progress Tracking', style: Theme.of(context).textTheme.displayLarge),
         bottom: TabBar(
           controller: _tabController,
+          indicatorColor: Theme.of(context).colorScheme.primary,
           tabs: [
             Tab(text: 'Goal Setting'),
             Tab(text: 'Session Scheduling'),
@@ -73,6 +74,7 @@ class GoalSettingTab extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              // Add Goal Logic Here
             },
             child: Text('Add Goal'),
           ),
@@ -86,6 +88,7 @@ class GoalSettingTab extends StatelessWidget {
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
+                      // Edit Goal Logic Here
                     },
                   ),
                 ),
@@ -95,6 +98,7 @@ class GoalSettingTab extends StatelessWidget {
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
+                      // Edit Goal Logic Here
                     },
                   ),
                 ),
@@ -141,6 +145,7 @@ class SessionSchedulingTab extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              // Schedule Session Logic Here
             },
             child: Text('Schedule Session'),
           ),
@@ -154,6 +159,7 @@ class SessionSchedulingTab extends StatelessWidget {
                   trailing: IconButton(
                     icon: Icon(Icons.cancel),
                     onPressed: () {
+                      // Cancel Session Logic Here
                     },
                   ),
                 ),
@@ -163,6 +169,7 @@ class SessionSchedulingTab extends StatelessWidget {
                   trailing: IconButton(
                     icon: Icon(Icons.cancel),
                     onPressed: () {
+                      // Cancel Session Logic Here
                     },
                   ),
                 ),
@@ -184,7 +191,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Theme.of(context).colorScheme.primary,
             ),
             child: Text(
               'Navigation Menu',
@@ -234,4 +241,3 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
-

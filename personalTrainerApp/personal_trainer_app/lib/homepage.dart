@@ -5,17 +5,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Trainer'),
+        title: Text('Personal Trainer', style: Theme.of(context).textTheme.displayLarge),
         leading: Builder(
           builder: (context) {
             return IconButton(
-              icon: Icon(Icons.menu),
+              icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.secondary),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
             );
           },
         ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       drawer: NavigationDrawer(),
       body: ListView(
@@ -23,10 +25,7 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           Text(
             'Are you ready to transform your body?',
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.displayLarge,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 30),
@@ -52,7 +51,7 @@ class WorkoutSection extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         image: DecorationImage(
-          image: NetworkImage('https://cdn-icons-png.flaticon.com/512/3860/3860254.png'), // Replace with your workout image URL
+          image: NetworkImage('https://cdn-icons-png.flaticon.com/512/3860/3860254.png'),
           fit: BoxFit.cover,
         ),
       ),
