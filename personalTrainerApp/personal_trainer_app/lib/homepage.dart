@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Trainer', style: Theme.of(context).textTheme.displayLarge),
+        title: Text('Personal Trainer'),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -16,8 +16,7 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.teal,
       ),
       drawer: NavigationDrawer(),
       body: ListView(
@@ -25,7 +24,7 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           Text(
             'Are you ready to transform your body?',
-            style: Theme.of(context).textTheme.displayLarge,
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(color: Colors.teal),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 30),
@@ -167,7 +166,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.teal,
             ),
             child: Text(
               'Navigation Menu',
@@ -178,7 +177,7 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.calendar_today),
+            leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
               Navigator.pushNamed(context, '/home');
@@ -213,65 +212,6 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-
-
-
-class MembershipPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Memberships'),
-      ),
-      body: Center(
-        child: Text('Membership Page Content'),
-      ),
-    );
-  }
-}
-
-class WorkoutPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Workout'),
-      ),
-      body: Center(
-        child: Text('Workout Page Content'),
-      ),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Center(
-        child: Text('Profile Page Content'),
-      ),
-    );
-  }
-}
-
-class GoalProgress extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Goal and Progress'),
-      ),
-      body: Center(
-        child: Text('Goal and Progress Page'),
       ),
     );
   }

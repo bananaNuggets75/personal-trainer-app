@@ -24,10 +24,11 @@ class _GoalProgressTrackerState extends State<GoalProgressTracker> with SingleTi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Goal and Progress Tracking', style: Theme.of(context).textTheme.displayLarge),
+        title: Text('Goal and Progress Tracking'),
+        backgroundColor: Colors.teal,
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Theme.of(context).colorScheme.primary,
+          indicatorColor: Colors.white,
           tabs: [
             Tab(text: 'Goal Setting'),
             Tab(text: 'Session Scheduling'),
@@ -60,16 +61,33 @@ class GoalSettingTab extends StatelessWidget {
         children: [
           TextField(
             controller: _goalDescriptionController,
-            decoration: InputDecoration(labelText: 'Goal Description'),
+            decoration: InputDecoration(
+              labelText: 'Goal Description',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
           ),
+          SizedBox(height: 10),
           TextField(
             controller: _targetDateController,
-            decoration: InputDecoration(labelText: 'Target Date'),
+            decoration: InputDecoration(
+              labelText: 'Target Date',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
             keyboardType: TextInputType.datetime,
           ),
+          SizedBox(height: 10),
           TextField(
             controller: _progressMetricsController,
-            decoration: InputDecoration(labelText: 'Progress Metrics'),
+            decoration: InputDecoration(
+              labelText: 'Progress Metrics',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
           ),
           SizedBox(height: 20),
           ElevatedButton(
@@ -77,6 +95,11 @@ class GoalSettingTab extends StatelessWidget {
               // Add Goal Logic Here
             },
             child: Text('Add Goal'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+              textStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
           ),
           SizedBox(height: 20),
           Expanded(
@@ -126,20 +149,43 @@ class SessionSchedulingTab extends StatelessWidget {
         children: [
           TextField(
             controller: _sessionTypeController,
-            decoration: InputDecoration(labelText: 'Session Type'),
+            decoration: InputDecoration(
+              labelText: 'Session Type',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
           ),
+          SizedBox(height: 10),
           TextField(
             controller: _coachInstructorController,
-            decoration: InputDecoration(labelText: 'Coach/Instructor'),
+            decoration: InputDecoration(
+              labelText: 'Coach/Instructor',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
           ),
+          SizedBox(height: 10),
           TextField(
             controller: _dateController,
-            decoration: InputDecoration(labelText: 'Date'),
+            decoration: InputDecoration(
+              labelText: 'Date',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
             keyboardType: TextInputType.datetime,
           ),
+          SizedBox(height: 10),
           TextField(
             controller: _timeController,
-            decoration: InputDecoration(labelText: 'Time'),
+            decoration: InputDecoration(
+              labelText: 'Time',
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.teal[50],
+            ),
             keyboardType: TextInputType.datetime,
           ),
           SizedBox(height: 20),
@@ -148,6 +194,11 @@ class SessionSchedulingTab extends StatelessWidget {
               // Schedule Session Logic Here
             },
             child: Text('Schedule Session'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+              textStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
           ),
           SizedBox(height: 20),
           Expanded(
@@ -191,7 +242,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.teal,
             ),
             child: Text(
               'Navigation Menu',
