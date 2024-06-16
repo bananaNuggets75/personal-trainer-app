@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'database.dart';
 
 class GoalProgressTracker extends StatefulWidget {
   @override
@@ -47,10 +48,17 @@ class _GoalProgressTrackerState extends State<GoalProgressTracker> with SingleTi
   }
 }
 
-class GoalSettingTab extends StatelessWidget {
+class GoalSettingTab extends StatefulWidget {
+  @override
+  _GoalSettingTabState createState() => _GoalSettingTabState();
+}
+
+class _GoalSettingTabState extends State<GoalSettingTab> {
   final TextEditingController _goalDescriptionController = TextEditingController();
   final TextEditingController _targetDateController = TextEditingController();
   final TextEditingController _progressMetricsController = TextEditingController();
+
+  final DatabaseHelper _dbHelper = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -61,71 +69,54 @@ class GoalSettingTab extends StatelessWidget {
         children: [
           TextField(
             controller: _goalDescriptionController,
-            decoration: InputDecoration(
-              labelText: 'Goal Description',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Goal Description'),
           ),
-          SizedBox(height: 10),
           TextField(
             controller: _targetDateController,
-            decoration: InputDecoration(
-              labelText: 'Target Date',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Target Date'),
             keyboardType: TextInputType.datetime,
           ),
-          SizedBox(height: 10),
           TextField(
             controller: _progressMetricsController,
-            decoration: InputDecoration(
-              labelText: 'Progress Metrics',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Progress Metrics'),
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              // Add Goal Logic Here
+            onPressed: () async {
+              Map<String, dynamic> row = {
+                'description': _goalDescriptionController.text,
+                'targetDate': _targetDateController.text,
+                'progressMetrics': _progressMetricsController.text,
+              };
+              await _dbHelper.insertGoal(row);
+              setState(() {});
             },
             child: Text('Add Goal'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
-              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-              textStyle: TextStyle(fontSize: 18.0, color: Colors.white),
-            ),
           ),
           SizedBox(height: 20),
           Expanded(
-            child: ListView(
-              children: [
-                ListTile(
-                  title: Text('Goal 1'),
-                  subtitle: Text('Progress: 50%'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      // Edit Goal Logic Here
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: Text('Goal 2'),
-                  subtitle: Text('Progress: 30%'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      // Edit Goal Logic Here
-                    },
-                  ),
-                ),
-              ],
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: _dbHelper.queryAllGoals(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                return ListView(
+                  children: snapshot.data!.map((goal) {
+                    return ListTile(
+                      title: Text(goal['description']),
+                      subtitle: Text('Progress: ${goal['progressMetrics']}%'),
+                      trailing: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          // Edit Goal Logic Here
+                        },
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
             ),
           ),
         ],
@@ -134,11 +125,18 @@ class GoalSettingTab extends StatelessWidget {
   }
 }
 
-class SessionSchedulingTab extends StatelessWidget {
+class SessionSchedulingTab extends StatefulWidget {
+  @override
+  _SessionSchedulingTabState createState() => _SessionSchedulingTabState();
+}
+
+class _SessionSchedulingTabState extends State<SessionSchedulingTab> {
   final TextEditingController _sessionTypeController = TextEditingController();
   final TextEditingController _coachInstructorController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+
+  final DatabaseHelper _dbHelper = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -149,82 +147,61 @@ class SessionSchedulingTab extends StatelessWidget {
         children: [
           TextField(
             controller: _sessionTypeController,
-            decoration: InputDecoration(
-              labelText: 'Session Type',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Session Type'),
           ),
-          SizedBox(height: 10),
           TextField(
             controller: _coachInstructorController,
-            decoration: InputDecoration(
-              labelText: 'Coach/Instructor',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Coach/Instructor'),
           ),
-          SizedBox(height: 10),
           TextField(
             controller: _dateController,
-            decoration: InputDecoration(
-              labelText: 'Date',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Date'),
             keyboardType: TextInputType.datetime,
           ),
-          SizedBox(height: 10),
           TextField(
             controller: _timeController,
-            decoration: InputDecoration(
-              labelText: 'Time',
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: Colors.teal[50],
-            ),
+            decoration: InputDecoration(labelText: 'Time'),
             keyboardType: TextInputType.datetime,
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              // Schedule Session Logic Here
+            onPressed: () async {
+              Map<String, dynamic> row = {
+                'sessionType': _sessionTypeController.text,
+                'coachInstructor': _coachInstructorController.text,
+                'date': _dateController.text,
+                'time': _timeController.text,
+              };
+              await _dbHelper.insertSession(row);
+              setState(() {});
             },
             child: Text('Schedule Session'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
-              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-              textStyle: TextStyle(fontSize: 18.0, color: Colors.white),
-            ),
           ),
           SizedBox(height: 20),
           Expanded(
-            child: ListView(
-              children: [
-                ListTile(
-                  title: Text('Session 1'),
-                  subtitle: Text('Date: 2024-06-01 Time: 10:00 AM'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      // Cancel Session Logic Here
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: Text('Session 2'),
-                  subtitle: Text('Date: 2024-06-02 Time: 11:00 AM'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      // Cancel Session Logic Here
-                    },
-                  ),
-                ),
-              ],
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: _dbHelper.queryAllSessions(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                return ListView(
+                  children: snapshot.data!.map((session) {
+                    return ListTile(
+                      title: Text(session['sessionType']),
+                      subtitle: Text('Date: ${session['date']} Time: ${session['time']}'),
+                      trailing: IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () async {
+                          await _dbHelper.deleteSession(session['id']);
+                          setState(() {});
+                        },
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
             ),
           ),
         ],
