@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'database.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final DatabaseHelper _dbHelper = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +95,20 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 10.0),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
+
                         if (username.isNotEmpty && password.isNotEmpty) {
-                          Navigator.pushReplacementNamed(context, '/home');
+                          var user = await _dbHelper.getUser(username, password);
+                          if (user != null) {
+                            Navigator.pushReplacementNamed(context, '/home');
+                          } else {
+                            // Show login error
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Invalid username or password')),
+                            );
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(

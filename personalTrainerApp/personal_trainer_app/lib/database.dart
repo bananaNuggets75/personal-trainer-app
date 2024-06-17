@@ -28,6 +28,14 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
+      CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        password TEXT
+      )
+    ''');
+
+    await db.execute('''
       CREATE TABLE goals (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT,
@@ -47,6 +55,26 @@ class DatabaseHelper {
     ''');
   }
 
+  // User operations
+  Future<int> insertUser(Map<String, dynamic> row) async {
+    Database db = await database;
+    return await db.insert('users', row);
+  }
+
+  Future<Map<String, dynamic>?> getUser(String username, String password) async {
+    Database db = await database;
+    List<Map<String, dynamic>> results = await db.query(
+      'users',
+      where: 'username = ? AND password = ?',
+      whereArgs: [username, password],
+    );
+    if (results.isNotEmpty) {
+      return results.first;
+    }
+    return null;
+  }
+
+  // CRUD operations for Goals
   Future<int> insertGoal(Map<String, dynamic> row) async {
     Database db = await database;
     return await db.insert('goals', row);
@@ -68,6 +96,7 @@ class DatabaseHelper {
     return await db.delete('goals', where: 'id = ?', whereArgs: [id]);
   }
 
+  // CRUD operations for Sessions
   Future<int> insertSession(Map<String, dynamic> row) async {
     Database db = await database;
     return await db.insert('sessions', row);
