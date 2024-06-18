@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'database.dart';
+import 'registration_page.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -123,7 +124,10 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: 10.0),
                     TextButton(
                       onPressed: () {
-                        // Handle register
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegistrationPage()),
+                        );
                       },
                       child: Text("Don't have an account? Register"),
                     ),
