@@ -45,7 +45,45 @@ class RegistrationPage extends StatelessWidget {
 
                 if (username.isNotEmpty && password.isNotEmpty) {
                   await _dbHelper.insertUser({'username': username, 'password': password});
-                  Navigator.pop(context);
+
+                  // Show success dialog
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Registration Successful'),
+                        content: Text('You have registered successfully!'),
+                        actions: [
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  // Show error dialog
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Registration Failed'),
+                        content: Text('Please enter both username and password.'),
+                        actions: [
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(

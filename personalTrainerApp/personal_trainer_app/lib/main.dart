@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'registration_page.dart';
 import 'package:personal_trainer_app/homepage.dart' as homepage;
 import 'package:personal_trainer_app/membership_page.dart' as membership;
 import 'package:personal_trainer_app/workout_page.dart' as workout;
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: {
+        '/register': (context) => RegistrationPage(),
         '/home': (context) => homepage.HomePage(),
         '/membership': (context) => membership.MembershipPage(),
         '/workout': (context) => workout.WorkoutPage(),
