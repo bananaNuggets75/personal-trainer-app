@@ -12,14 +12,12 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          // Background image
           Positioned.fill(
             child: Image.network(
               'https://png.pngtree.com/thumb_back/fh260/background/20230613/pngtree-black-and-white-gym-room-with-a-row-of-equipment-image_2911173.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          // Gradient overlay
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -31,7 +29,6 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ),
-          // Login form
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -98,13 +95,14 @@ class LoginPage extends StatelessWidget {
                       onPressed: () async {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
+                        print('Attempting login with username: $username, password: $password');
 
                         if (username.isNotEmpty && password.isNotEmpty) {
                           var user = await _dbHelper.getUser(username, password);
+                          print('User found: $user');
                           if (user != null) {
                             Navigator.pushReplacementNamed(context, '/home');
                           } else {
-                            // Show login error
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Invalid username or password')),
                             );

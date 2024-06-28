@@ -44,27 +44,32 @@ class RegistrationPage extends StatelessWidget {
                 String password = _passwordController.text;
 
                 if (username.isNotEmpty && password.isNotEmpty) {
-                  await _dbHelper.insertUser({'username': username, 'password': password});
+                  try {
+                    int id = await _dbHelper.insertUser({'username': username, 'password': password});
+                    print('User inserted with id: $id');
 
-                  // Show success dialog
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Registration Successful'),
-                        content: Text('You have registered successfully!'),
-                        actions: [
-                          TextButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                    // Show success dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Registration Successful'),
+                          content: Text('You have registered successfully!'),
+                          actions: [
+                            TextButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } catch (e) {
+                    print('Error inserting user: $e');
+                  }
                 } else {
                   // Show error dialog
                   showDialog(
