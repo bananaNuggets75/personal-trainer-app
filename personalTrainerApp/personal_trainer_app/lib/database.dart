@@ -1,212 +1,104 @@
-import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
 import 'package:path/path.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
-  static Database? _database;
+  static final DatabaseHelper _singleton = DatabaseHelper._internal();
 
-  factory DatabaseHelper() {
-    return _instance;
-  }
+  // Singleton instance
+  static DatabaseHelper get instance => _singleton;
 
+  // Database instance
+  Database? _database;
+
+  // Private constructor
   DatabaseHelper._internal();
 
   Future<Database> get database async {
-    if (_database != null) return _database!;
+    if (_database != null) {
+      return _database!;
+    }
     _database = await _initDatabase();
     return _database!;
   }
 
   Future<Database> _initDatabase() async {
-    try {
-      String path = join(await getDatabasesPath(), 'app_database.db');
-      print('Database path: $path'); // Log database path
-      return await openDatabase(
-        path,
-        version: 1,
-        onCreate: _onCreate,
-        onOpen: (db) {
-          print('Database opened');
-        },
-      );
-    } catch (e) {
-      print('Error initializing database: $e');
-      rethrow;
-    }
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    final dbPath = join(appDocumentDir.path, 'app_database.db');
+    return databaseFactoryIo.openDatabase(dbPath);
+  }
+
+  final _userStore = intMapStoreFactory.store('users');
+  final _goalStore = intMapStoreFactory.store('goals');
+  final _sessionStore = intMapStoreFactory.store('sessions');
+
+  // User CRUD
+  Future<int> insertUser(Map<String, dynamic> row) async {
+    final db = await database;
+    return await _userStore.add(db, row);
   }
 
   Future<Map<String, dynamic>?> getUser(String username, String password) async {
-    try {
-      Database db = await database;
-      print('Querying user: $username');
-      List<Map<String, dynamic>> results = await db.query(
-        'users',
-        where: 'username = ? AND password = ?',
-        whereArgs: [username, password],
-      );
-      print('Query results: $results'); // Log query results
-      if (results.isNotEmpty) {
-        return results.first;
-      }
-      return null;
-    } catch (e) {
-      print('Error querying user: $e');
-      return null;
+    final db = await database;
+    final finder = Finder(
+      filter: Filter.and([
+        Filter.equals('username', username),
+        Filter.equals('password', password),
+      ]),
+    );
+    final recordSnapshots = await _userStore.find(db, finder: finder);
+    if (recordSnapshots.isNotEmpty) {
+      return recordSnapshots.first.value;
     }
+    return null;
   }
 
-  Future _onCreate(Database db, int version) async {
-    try {
-      print('Creating database and tables');
-      await db.execute('''
-      CREATE TABLE users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT,
-        password TEXT
-      )
-      ''');
-
-      await db.execute('''
-      CREATE TABLE goals (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        description TEXT,
-        targetDate TEXT,
-        progressMetrics TEXT
-      )
-      ''');
-
-      await db.execute('''
-      CREATE TABLE sessions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        sessionType TEXT,
-        coachInstructor TEXT,
-        date TEXT,
-        time TEXT
-      )
-      ''');
-
-      // Insert initial user
-      int userId = await db.insert('users', {
-        'username': 'testuser',
-        'password': 'password123'
-      });
-      print('Inserted initial user with ID: $userId');
-    } catch (e) {
-      print('Error creating database or inserting initial data: $e');
-    }
-  }
-
-  // User operations
-  Future<int> insertUser(Map<String, dynamic> row) async {
-    try {
-      Database db = await database;
-      return await db.insert('users', row);
-    } catch (e) {
-      print('Error inserting user: $e');
-      return -1;
-    }
-  }
-
-  Future<Map<String, dynamic>?> getUsers(String username, String password) async {
-    try {
-      Database db = await database;
-      List<Map<String, dynamic>> results = await db.query(
-        'users',
-        where: 'username = ? AND password = ?',
-        whereArgs: [username, password],
-      );
-      if (results.isNotEmpty) {
-        return results.first;
-      }
-      return null;
-    } catch (e) {
-      print('Error getting user: $e');
-      return null;
-    }
-  }
-
-  // CRUD operations for Goals
+  // Goal CRUD
   Future<int> insertGoal(Map<String, dynamic> row) async {
-    try {
-      Database db = await database;
-      return await db.insert('goals', row);
-    } catch (e) {
-      print('Error inserting goal: $e');
-      return -1;
-    }
+    final db = await database;
+    return await _goalStore.add(db, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllGoals() async {
-    try {
-      Database db = await database;
-      return await db.query('goals');
-    } catch (e) {
-      print('Error querying goals: $e');
-      return [];
-    }
+    final db = await database;
+    final recordSnapshots = await _goalStore.find(db);
+    return recordSnapshots.map((snapshot) => snapshot.value).toList();
   }
 
   Future<int> updateGoal(Map<String, dynamic> row) async {
-    try {
-      Database db = await database;
-      int id = row['id'];
-      return await db.update('goals', row, where: 'id = ?', whereArgs: [id]);
-    } catch (e) {
-      print('Error updating goal: $e');
-      return -1;
-    }
+    final db = await database;
+    final finder = Finder(filter: Filter.byKey(row['id']));
+    return await _goalStore.update(db, row, finder: finder);
   }
 
   Future<int> deleteGoal(int id) async {
-    try {
-      Database db = await database;
-      return await db.delete('goals', where: 'id = ?', whereArgs: [id]);
-    } catch (e) {
-      print('Error deleting goal: $e');
-      return -1;
-    }
+    final db = await database;
+    final finder = Finder(filter: Filter.byKey(id));
+    return await _goalStore.delete(db, finder: finder);
   }
 
-  // CRUD operations for Sessions
+  // Session CRUD
   Future<int> insertSession(Map<String, dynamic> row) async {
-    try {
-      Database db = await database;
-      return await db.insert('sessions', row);
-    } catch (e) {
-      print('Error inserting session: $e');
-      return -1;
-    }
+    final db = await database;
+    return await _sessionStore.add(db, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllSessions() async {
-    try {
-      Database db = await database;
-      return await db.query('sessions');
-    } catch (e) {
-      print('Error querying sessions: $e');
-      return [];
-    }
+    final db = await database;
+    final recordSnapshots = await _sessionStore.find(db);
+    return recordSnapshots.map((snapshot) => snapshot.value).toList();
   }
 
   Future<int> updateSession(Map<String, dynamic> row) async {
-    try {
-      Database db = await database;
-      int id = row['id'];
-      return await db.update('sessions', row, where: 'id = ?', whereArgs: [id]);
-    } catch (e) {
-      print('Error updating session: $e');
-      return -1;
-    }
+    final db = await database;
+    final finder = Finder(filter: Filter.byKey(row['id']));
+    return await _sessionStore.update(db, row, finder: finder);
   }
 
   Future<int> deleteSession(int id) async {
-    try {
-      Database db = await database;
-      return await db.delete('sessions', where: 'id = ?', whereArgs: [id]);
-    } catch (e) {
-      print('Error deleting session: $e');
-      return -1;
-    }
+    final db = await database;
+    final finder = Finder(filter: Filter.byKey(id));
+    return await _sessionStore.delete(db, finder: finder);
   }
 }

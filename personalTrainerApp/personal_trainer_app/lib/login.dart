@@ -5,7 +5,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final DatabaseHelper _dbHelper = DatabaseHelper();
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +107,10 @@ class LoginPage extends StatelessWidget {
                               SnackBar(content: Text('Invalid username or password')),
                             );
                           }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Please enter both username and password')),
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(

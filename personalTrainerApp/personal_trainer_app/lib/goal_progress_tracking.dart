@@ -58,7 +58,7 @@ class _GoalSettingTabState extends State<GoalSettingTab> {
   final TextEditingController _targetDateController = TextEditingController();
   final TextEditingController _progressMetricsController = TextEditingController();
 
-  final DatabaseHelper _dbHelper = DatabaseHelper();
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class _SessionSchedulingTabState extends State<SessionSchedulingTab> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
 
-  final DatabaseHelper _dbHelper = DatabaseHelper();
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   @override
   Widget build(BuildContext context) {
